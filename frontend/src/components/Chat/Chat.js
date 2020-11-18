@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from "socket.io-client";
+import { Link } from "react-router-dom";
 
 let socket;
 
@@ -8,20 +9,61 @@ export default function Chat({ location }) {
 
     const [username, setUsername] = useState('');
     const [roomName, setRoomName] = useState('');
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
     const ENDPOINT = 'localhost:8080';
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setMessage(value);
+    };
+
+    const handleKeyPress = (e) => {
+        const { key } = e;
+
+        if (key === "Enter") {
+            sendMessage(e);
+        } else {
+            return null;
+        }
+    };
 
     useEffect(() => {
         // "location" returns a URL
         const { username, room } = queryString.parse(location.search);
 
-        socket = io(ENDPOINT, {transports: ['websocket', 'polling', 'flashsocket']});
+        // onRender, make a connection to Backend
+        socket = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] });
 
         setUsername(username);
         setRoomName(room);
 
-        console.log(socket);
+        socket.emit('join', { username, room }, (res) => {
 
+        });
+
+        // Gets called on UnMount
+        return () => {
+            socket.emit('leave', { username });
+
+            // Turn off a client instance
+            socket.off();
+        }
     }, [ENDPOINT, location.search]);
+
+    useEffect(() => {
+        socket.on('message', (msg) => setMessages([...messages, msg]));
+    }, [messages]);
+
+    const sendMessage = (e) => {
+        e.preventDefault();
+
+        if (message) {
+            socket.emit('sendMessage', message, () => setMessage(''));
+        }
+    }
+
+    console.log(message, messages);
 
     return (
         <div className="chat-container">
@@ -30,7 +72,10 @@ export default function Chat({ location }) {
                     <i className="fas fa-smile" />
                     ChatCord
                 </h1>
-                <a href="index.html" className="btn">Leave Room</a>
+                <Link to={`/`}>
+                    <button className="btn" type="submit">Leave Room</button>
+                </Link>
+
             </header>
             <main className="chat-main">
                 <div className="chat-sidebar">
@@ -67,11 +112,14 @@ export default function Chat({ location }) {
                     <input
                         id="msg"
                         type="text"
+                        value={message}
+                        onChange={handleInputChange}
+                        onKeyPress={handleKeyPress}
                         placeholder="Enter Message"
                         required
                         autoComplete="off"
                     />
-                    <button className="btn"><i className="fas fa-paper-plane"></i> Send</button>
+                    <button className="btn" onClick={e => sendMessage(e)}><i className="fas fa-paper-plane"></i> Send</button>
                 </form>
             </div>
         </div>
