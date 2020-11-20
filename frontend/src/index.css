@@ -126,6 +126,19 @@ a {
 	flex: 1;
 }
 
+.backgroundDark{
+	background-color: rgb(49, 49, 49)!important;
+	color: white!important;
+}
+
+.userName{
+	color: rgb(255, 255, 255)!important;
+}
+
+.userTime{
+	color: rgb(177, 177, 177)!important;
+}
+
 /* Join Page */
 .join-container {
 	max-width: 500px;

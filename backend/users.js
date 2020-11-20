@@ -1,12 +1,9 @@
 const users = [];
 
 const addUser = (data) => {
-  const { userID, username, room } = data;
+  let { userID, username, room } = data;
 
-  username.trim().toLowerCase();
-  room.trim().toLowerCase();
-
-  const existingUser = users.find((user) => user.room === room && user.username === username);
+  const existingUser = users.find((user) => user.room === room.trim().toLowerCase() && user.username === username.trim().toLowerCase());
 
   if (existingUser) {
     return { error: "Username is taken." };
@@ -22,7 +19,9 @@ const removeUser = (userID) => {
   const index = users.findIndex((user) => user.userID === userID);
 
   if (index) {
-    return users.splice(index, 1);
+    const spliced = users.splice(index, 1)[0];
+
+    return spliced;
   }
 };
 

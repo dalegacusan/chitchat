@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from "socket.io-client";
-import { Link } from "react-router-dom";
+
+import ChatHeader from "./ChatHeader/ChatHeader";
+import ChatSidebar from "./ChatSidebar/ChatSidebar";
+import Messages from "./Messages/Messages";
+import ChatForm from "./ChatForm/ChatForm";
 
 let socket;
 
@@ -9,6 +13,7 @@ export default function Chat({ location }) {
 
     const [username, setUsername] = useState('');
     const [roomName, setRoomName] = useState('');
+    const [usersInRoom, setUsersInRoom] = useState([]);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const ENDPOINT = 'localhost:8080';
@@ -33,21 +38,20 @@ export default function Chat({ location }) {
         const { username, room } = queryString.parse(location.search);
 
         // onRender, make a connection to Backend
-        socket = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] });
+        socket = io(ENDPOINT, { transports: ['websocket'], upgrade: false });
 
         setUsername(username);
         setRoomName(room);
 
         socket.emit('join', { username, room }, (res) => {
-
+            console.log(res);
         });
 
         // Gets called on UnMount
         return () => {
-            socket.emit('leave', { username });
-
+            console.log("Closing socket...");
             // Turn off a client instance
-            socket.off();
+            socket.close();
         }
     }, [ENDPOINT, location.search]);
 
@@ -67,60 +71,21 @@ export default function Chat({ location }) {
 
     return (
         <div className="chat-container">
-            <header className="chat-header">
-                <h1>
-                    <i className="fas fa-smile" />
-                    ChatCord
-                </h1>
-                <Link to={`/`}>
-                    <button className="btn" type="submit">Leave Room</button>
-                </Link>
-
-            </header>
+            <ChatHeader />
             <main className="chat-main">
-                <div className="chat-sidebar">
-                    <h3><i className="fas fa-comments"></i> Room Name:</h3>
-                    <h2 id="room-name">JavaScript</h2>
-                    <h3><i className="fas fa-users"></i> Users</h3>
-                    <ul id="users">
-                        <li>Brad</li>
-                        <li>John</li>
-                        <li>Mary</li>
-                        <li>Paul</li>
-                        <li>Mike</li>
-                    </ul>
-                </div>
+                <ChatSidebar usersInRoom={usersInRoom} roomName={roomName} />
                 <div className="chat-messages">
-                    <div className="message">
-                        <p className="meta">Brad <span>9:12pm</span></p>
-                        <p className="text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            repudiandae.
-						</p>
-                    </div>
-                    <div className="message">
-                        <p className="meta">Mary <span>9:15pm</span></p>
-                        <p className="text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            repudiandae.
-						</p>
-                    </div>
+                    <Messages messages={messages} username={username} />
                 </div>
             </main>
             <div className="chat-form-container">
-                <form id="chat-form">
-                    <input
-                        id="msg"
-                        type="text"
-                        value={message}
-                        onChange={handleInputChange}
-                        onKeyPress={handleKeyPress}
-                        placeholder="Enter Message"
-                        required
-                        autoComplete="off"
-                    />
-                    <button className="btn" onClick={e => sendMessage(e)}><i className="fas fa-paper-plane"></i> Send</button>
-                </form>
+                <ChatForm
+                    messages={messages}
+                    username={username}
+                    handleInputChange={handleInputChange}
+                    handleKeyPress={handleKeyPress}
+                    sendMessage={sendMessage}
+                />
             </div>
         </div>
     );
