@@ -59,6 +59,13 @@ export default function Chat({ location }) {
         socket.on('message', (msg) => setMessages([...messages, msg]));
     }, [messages]);
 
+    useEffect(() => {
+        socket.on('roomData', (data) => {
+            const { room, users } = data;
+            setUsersInRoom(users);
+        });
+    }, []);
+
     const sendMessage = (e) => {
         e.preventDefault();
 

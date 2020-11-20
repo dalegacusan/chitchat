@@ -5,8 +5,6 @@ import ScrollToBottom from "react-scroll-to-bottom";
 export default function Messages(props) {
   const { messages, username } = props;
 
-  console.log(username);
-
   return (
     <ScrollToBottom>
       {

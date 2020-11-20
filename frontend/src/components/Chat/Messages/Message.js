@@ -7,7 +7,6 @@ export default function Message(props) {
   let isSentByCurrentUser = false;
 
   const trimmedUsername = username.trim().toLowerCase();
-  console.log(`${username} === ${trimmedUsername}`);
 
   // We trimmed our username in the backend
   if (user === trimmedUsername) {
