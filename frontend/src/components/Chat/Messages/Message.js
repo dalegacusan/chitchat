@@ -7,9 +7,10 @@ export default function Message(props) {
   let isSentByCurrentUser = false;
 
   const trimmedUsername = username.trim().toLowerCase();
+  console.log(`${username} === ${trimmedUsername}`);
 
   // We trimmed our username in the backend
-  if (username === trimmedUsername) {
+  if (user === trimmedUsername) {
     isSentByCurrentUser = true;
   }
 
@@ -29,6 +30,5 @@ export default function Message(props) {
           <p className="text">{text}</p>
         </div>
       )
-
   );
 }

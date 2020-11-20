@@ -63,11 +63,12 @@ export default function Chat({ location }) {
         e.preventDefault();
 
         if (message) {
-            socket.emit('sendMessage', message, () => setMessage(''));
+            socket.emit('sendMessage', message, () => {
+                console.log("I'm here");
+                setMessage('');
+            });
         }
     }
-
-    console.log(message, messages);
 
     return (
         <div className="chat-container">
@@ -80,7 +81,7 @@ export default function Chat({ location }) {
             </main>
             <div className="chat-form-container">
                 <ChatForm
-                    messages={messages}
+                    message={message}
                     username={username}
                     handleInputChange={handleInputChange}
                     handleKeyPress={handleKeyPress}
