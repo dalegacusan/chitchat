@@ -16,6 +16,7 @@ export default function Chat({ location }) {
     const [usersInRoom, setUsersInRoom] = useState([]);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    // const ENDPOINT = 'https://real-time-chat-react.herokuapp.com/';
     const ENDPOINT = 'localhost:8080';
 
     const handleInputChange = (e) => {
@@ -44,7 +45,6 @@ export default function Chat({ location }) {
         setRoomName(room);
 
         socket.emit('join', { username, room }, (res) => {
-            console.log(res);
         });
 
         // Gets called on UnMount
@@ -61,7 +61,7 @@ export default function Chat({ location }) {
 
     useEffect(() => {
         socket.on('roomData', (data) => {
-            const { room, users } = data;
+            const { users } = data;
             setUsersInRoom(users);
         });
     }, []);
@@ -70,10 +70,7 @@ export default function Chat({ location }) {
         e.preventDefault();
 
         if (message) {
-            socket.emit('sendMessage', message, () => {
-                console.log("I'm here");
-                setMessage('');
-            });
+            socket.emit('sendMessage', message, () => setMessage(''));
         }
     }
 
