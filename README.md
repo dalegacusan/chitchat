@@ -18,7 +18,7 @@ I used the [concurrently package](https://www.npmjs.com/package/concurrently) to
 ## Live Demo
 The application's *back-end* is deployed on [Heroku](https://www.heroku.com/), while the *front-end* is deployed with [Netlify](https://www.netlify.com/).
 
-[Click me for a live demo.](https://dazzling-yalow-3d0364.netlify.app/)
+[Click me for a live demo.](https://chitchatrooms.netlify.app/)
 
 ## How to use?
 
