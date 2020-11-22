@@ -6,7 +6,7 @@ export default function ChatHeader() {
     <header className="chat-header">
       <h1>
         <i className="fas fa-smile" />
-                    ChatCord
+                    Chitchat
                 </h1>
       <Link to={`/`}>
         <button className="btn" type="submit">Leave Room</button>

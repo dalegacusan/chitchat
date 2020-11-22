@@ -21,7 +21,7 @@ export default function Landing() {
             <header className="join-header">
                 <h1>
                     <i className="fas fa-smile" />
-                ChatCord
+                Chitchat
                 </h1>
             </header>
             <main className="join-main">
