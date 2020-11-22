@@ -7,7 +7,7 @@ Chitchat is a chat application where users can **send messages in real-time** wi
 ## Built With
 
 **Front-end**:
-* HTML, CSS (Bootstrap), React
+* HTML, CSS, React
 
 **Back-end**:
 * Javascript (NodeJS, Express)
