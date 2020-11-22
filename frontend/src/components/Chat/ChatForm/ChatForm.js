@@ -15,7 +15,7 @@ export default function ChatForm(props) {
         required
         autoComplete="off"
       />
-      <button className="btn" onClick={e => sendMessage(e)}><i className="fas fa-paper-plane"></i> Send</button>
+      <button className="btn chat-btn" onClick={e => sendMessage(e)}><i className="fas fa-paper-plane"></i> Send</button>
     </form>
   );
 }

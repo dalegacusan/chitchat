@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function ChatHeader() {
   return (
-    <header className="chat-header">
-      <h1>
-        <i className="fas fa-smile" />
-                    Chitchat
-                </h1>
+    <header className="chat-header join-header">
+      <div>
+        <i className="fas fa-comment-dots" />
+        <p>Chitchat</p>
+      </div>
+
       <Link to={`/`}>
-        <button className="btn" type="submit">Leave Room</button>
+        <button className="btn chat-btn" type="submit">Leave Room</button>
       </Link>
 
     </header>

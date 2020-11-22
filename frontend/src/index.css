@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 :root {
-	--dark-color-a: #667aff;
-	--dark-color-b: #7386ff;
-	--light-color: #e6e9ff;
+	--header-color: #3278B5;
+	--container-color: #FFFFFF;
+	--light-color: #F5F8FA;
+	--lightblue-color: rgb(60, 131, 194);
+	--black-color: #212121;
 	--success-color: #5cb85c;
-	--error-color: #d9534f;
+	--error-color: #6e5f5e;
 }
 
 * {
@@ -31,11 +33,16 @@ a {
 
 .btn {
 	cursor: pointer;
-	padding: 5px 15px;
-	background: var(--light-color);
-	color: var(--dark-color-a);
+	padding: 10px 15px;
+	background: var(--black-color);
+	color: white;
 	border: 0;
 	font-size: 17px;
+}
+
+.chat-btn{
+	background-color: var(--light-color);
+	color: black;
 }
 
 /* Chat Page */
@@ -48,7 +55,7 @@ a {
 }
 
 .chat-header {
-	background: var(--dark-color-a);
+	background: var(--header-color);
 	color: #fff;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -64,7 +71,7 @@ a {
 }
 
 .chat-sidebar {
-	background: var(--dark-color-b);
+	background-color: var(--lightblue-color);
 	color: #fff;
 	padding: 20px 20px 60px;
 	overflow-y: scroll;
@@ -72,13 +79,16 @@ a {
 
 .chat-sidebar h2 {
 	font-size: 20px;
-	background: rgba(0, 0, 0, 0.1);
+	background: rgba(90, 90, 90, 0.2);
 	padding: 10px;
 	margin-bottom: 20px;
+	font-weight: normal;
+
 }
 
 .chat-sidebar h3 {
 	margin-bottom: 15px;
+	font-weight: normal;
 }
 
 .chat-sidebar ul li {
@@ -112,7 +122,7 @@ a {
 
 .chat-form-container {
 	padding: 20px 30px;
-	background-color: var(--dark-color-a);
+	background-color: var(--header-color);
 }
 
 .chat-form-container form {
@@ -127,7 +137,7 @@ a {
 }
 
 .backgroundDark{
-	background-color: rgb(49, 49, 49)!important;
+	background-color:var(--black-color)!important;
 	color: white!important;
 }
 
@@ -143,20 +153,34 @@ a {
 .join-container {
 	max-width: 500px;
 	margin: 80px auto;
-	color: #fff;
+	color: black;
+	box-shadow: 0px 0px 15px 5px rgba(216, 216, 216, 0.75);
 }
 
 .join-header {
 	text-align: center;
 	padding: 20px;
-	background: var(--dark-color-a);
+	background: var(--header-color);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	color: white;
+}
+
+.join-header p{
+	display: inline-block;
+	font-size: 32px;
+	font-weight: bold;
+}
+
+.join-header i{
+	font-size: 30px;
+	margin-left: -10px;
+	margin-right: 10px;
 }
 
 .join-main {
 	padding: 30px 40px;
-	background: var(--dark-color-b);
+	background: var(--container-color);
 }
 
 .join-main p {

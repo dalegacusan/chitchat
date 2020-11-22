@@ -16,8 +16,8 @@ export default function Chat({ location }) {
     const [usersInRoom, setUsersInRoom] = useState([]);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    // const ENDPOINT = 'https://real-time-chat-react.herokuapp.com/';
-    const ENDPOINT = 'localhost:8080';
+    const ENDPOINT = 'https://real-time-chat-react.herokuapp.com/';
+    // const ENDPOINT = 'localhost:8080';
 
     const handleInputChange = (e) => {
         const { value } = e.target;
@@ -82,16 +82,18 @@ export default function Chat({ location }) {
                 <div className="chat-messages">
                     <Messages messages={messages} username={username} />
                 </div>
+
+
             </main>
             <div className="chat-form-container">
-                <ChatForm
-                    message={message}
-                    username={username}
-                    handleInputChange={handleInputChange}
-                    handleKeyPress={handleKeyPress}
-                    sendMessage={sendMessage}
-                />
-            </div>
+                    <ChatForm
+                        message={message}
+                        username={username}
+                        handleInputChange={handleInputChange}
+                        handleKeyPress={handleKeyPress}
+                        sendMessage={sendMessage}
+                    />
+                </div>
         </div>
     );
 }

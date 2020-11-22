@@ -19,10 +19,8 @@ export default function Landing() {
     return (
         <div className="join-container">
             <header className="join-header">
-                <h1>
-                    <i className="fas fa-smile" />
-                Chitchat
-                </h1>
+                <i className="fas fa-comment-dots" />
+                <p>Chitchat</p>
             </header>
             <main className="join-main">
                 <form>
