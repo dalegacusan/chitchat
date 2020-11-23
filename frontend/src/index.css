@@ -215,6 +215,30 @@ a {
 	width: 100%;
 }
 
+/* Footer */
+.source-code-footer{
+	padding: 20px;
+	text-align: center;
+	font-size: 13px;
+}
+
+.source-code-footer a{
+	color: rgb(161, 0, 0);
+}
+
+.source-code-footer a:hover{
+	color: var(--header-color);
+}
+
+.fa-github{
+	margin: 0 6px;
+	color: var(--black-color);
+}
+
+.fa-github:hover{
+	color: var(--header-color);
+}
+
 @media (max-width: 700px) {
 	.chat-main {
 		display: block;

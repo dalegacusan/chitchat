@@ -57,7 +57,7 @@ export default function Chat({ location }) {
         // Gets called on unMount
         return () => {
             console.log("Closing socket...");
-            
+
             // Turn off a client instance
             socket.close();
         }

@@ -51,6 +51,12 @@ export default function Landing() {
                     </Link>
                 </form>
             </main>
+            <footer className="source-code-footer">
+                <a href="https://github.com/dalegacusan" target="_blank">
+                    <i className="fab fa-github"></i>
+                </a>
+                Source Code on <a href="https://github.com/dalegacusan/real-time-chat" target="_blank">GitHub</a>
+            </footer>
         </div>
     );
 }
