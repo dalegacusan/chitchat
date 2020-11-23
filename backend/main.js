@@ -3,8 +3,9 @@ const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
+const { messageHandler, roomHandler } = require("./helpers/helpers");
 
-// Get all Routes
+// Routes
 const router = require('./router');
 
 const app = express();
@@ -14,47 +15,96 @@ const io = socketio(server);
 app.use(cors());
 app.use(router);
 
-// All code will be inside this connection,
-// because "socket" will store the current connection/socket
+// "Socket" stores the current connection/socket
 io.on('connection', (socket) => {
-  socket.on('join', ({ username, room }, callback) => {
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  socket.on('join', (data, callback) => {
+    const { username, room } = data;
 
     // Returns an Error Object OR a User Object
-    const { error, user } = addUser({ userID: socket.id, username, room });
-    console.log(`${username} joined the room.`);
+    const { error, user } = addUser(
+      {
+        userID: socket.id,
+        username,
+        room
+      }
+    );
+
+    const { username: currentUserName, room: currentRoom } = user;
 
     if (error) return callback(error);
 
-    // Joins a user in a room
-    socket.join(user.room);
+    socket.join(currentRoom);
 
-    // Welcomes a user to the chat
-    socket.emit('message', { user: 'admin', text: `Welcome ${username} to ${room}.`, time });
-    // "broadcast" sends a message to everyone besides a specific user/room
-    // Let everybody in the room know that a user has joined the room.
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${username} joined the room.`, time });
+    // Welcome Message (ONLY to CURRENT SOCKET)
+    socket.emit(
+      'message',
+      messageHandler(
+        'admin',
+        `Welcome ${currentUserName} to ${currentRoom}.`,
+      )
+    );
 
-    io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+    // Join Message (TO ALL SOCKETS)
+    socket.broadcast.to(currentRoom).emit(
+      'message',
+      messageHandler(
+        'admin',
+        `${currentUserName} joined the room.`,
+      )
+    );
+
+    // ==================================================== //
+    io.to(currentRoom).emit(
+      'roomData',
+      roomHandler(
+        currentRoom,
+        getUsersInRoom(currentRoom)
+      )
+    );
+    // ==================================================== //
 
     callback();
   });
 
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const { username: currentUsername, room: currentRoom } = user;
 
-    io.to(user.room).emit('message', { user: user.username, text: message, time });
+    // ==================================================== //
+    io.to(currentRoom).emit(
+      'message',
+      messageHandler(
+        currentUsername,
+        message,
+      )
+    );
+    // ==================================================== //
 
     callback();
   })
 
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
+    const { username: currentUserName, room: currentRoom } = user;
 
     if (user) {
-      io.to(user.room).emit('message', { user: 'admin', text: `${user.username} has left the room.`, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+      // ==================================================== //
+      io.to(currentRoom).emit(
+        'message',
+        messageHandler(
+          'admin',
+          `${currentUserName} has left the room.`,
+        ),
+      )
+
+      io.to(currentRoom).emit(
+        'roomData',
+        roomHandler(
+          currentRoom,
+          getUsersInRoom(currentRoom)
+        )
+      )
+      // ==================================================== //
     }
   });
 
