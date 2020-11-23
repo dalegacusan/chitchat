@@ -21,9 +21,9 @@ const addUser = (data) => {
 const removeUser = (userID) => {
   const index = users.findIndex((user) => user.userID === userID);
 
-  if (index) {
+  if (typeof users[index] !== 'undefined') {
     const spliced = users.splice(index, 1);
-    
+
     return spliced;
   }
 };
