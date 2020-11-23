@@ -24,11 +24,11 @@ The application's *back-end* is deployed on [Heroku](https://www.heroku.com/), w
 
 Enter both **Username**, and **Room ID** of your choice.
 
-![Landing](https://imgur.com/HLSuikQ.png)
+![Screenshot](https://imgur.com/HLSuikQ.png)
 
 Click **Join Room** and your screen should look like this:
 
-![Chat](https://imgur.com/11VK8Ce.png)
+![Screenshot](https://imgur.com/tM7sfgk.png)
 
 ## Credits
 
