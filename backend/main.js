@@ -84,8 +84,8 @@ io.on('connection', (socket) => {
   })
 
   socket.on('disconnect', () => {
-    const user = removeUser(socket.id)[0];
-    const { username, room } = user;
+    const user = removeUser(socket.id);
+    const { username, room } = user[0];
 
     if (user) {
       // ==================================================== //

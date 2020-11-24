@@ -43,6 +43,5 @@
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.1"
   },
-  "proxy": "http://localhost:8080",
-  "secure": false
+  "proxy": "http://localhost:8080"
 }
