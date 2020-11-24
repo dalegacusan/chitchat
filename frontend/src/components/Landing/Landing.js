@@ -24,10 +24,11 @@ export default function Landing() {
             </header>
             <main className="join-main">
                 <form>
-                    <div className="form-control">
+                    <div className="form-group">
                         <label htmlFor="username">Username</label>
                         <input
                             type="text"
+                            className="form-control"
                             name="username"
                             id="username"
                             value={username}
@@ -35,10 +36,11 @@ export default function Landing() {
                             placeholder="Enter username"
                         />
                     </div>
-                    <div className="form-control">
+                    <div className="form-group">
                         <label htmlFor="room">Room</label>
                         <input
                             type="text"
+                            className="form-control"
                             name="room"
                             id="room"
                             value={roomName}
@@ -46,8 +48,14 @@ export default function Landing() {
                             placeholder="Enter Room ID"
                         />
                     </div>
+                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span><strong>Holy guacamole!</strong> You should check in on some of those fields below.</span>
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <Link onClick={e => (!username || !roomName) ? e.preventDefault() : null} to={`/room?username=${username}&room=${roomName}`}>
-                        <button className="btn" type="submit">Join Room</button>
+                        <button type="submit" className="btn">Join Room</button>
                     </Link>
                 </form>
             </main>
