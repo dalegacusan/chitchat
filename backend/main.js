@@ -29,9 +29,9 @@ io.on('connection', (socket) => {
       }
     );
 
-    const { username: currentUserName, room: currentRoom } = user;
-
     if (error) return callback(error);
+
+    const { username: currentUserName, room: currentRoom } = user;
 
     socket.join(currentRoom);
 
@@ -84,24 +84,24 @@ io.on('connection', (socket) => {
   })
 
   socket.on('disconnect', () => {
-    const user = removeUser(socket.id);
-    const { username: currentUserName, room: currentRoom } = user;
+    const user = removeUser(socket.id)[0];
+    const { username, room } = user;
 
     if (user) {
       // ==================================================== //
-      io.to(currentRoom).emit(
+      io.to(room).emit(
         'message',
         messageHandler(
           'admin',
-          `${currentUserName} has left the room.`,
+          `${username} has left the room.`,
         ),
       )
 
-      io.to(currentRoom).emit(
+      io.to(room).emit(
         'roomData',
         roomHandler(
-          currentRoom,
-          getUsersInRoom(currentRoom)
+          room,
+          getUsersInRoom(room)
         )
       )
       // ==================================================== //

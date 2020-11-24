@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+const axios = require('axios');
 
 export default function Landing() {
 
     const [username, setUsername] = useState('');
     const [roomName, setRoomName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [users, setUsers] = useState([]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -18,14 +20,27 @@ export default function Landing() {
     }
 
     const handleSubmit = (e) => {
+        const findUser = users.find(user => user.username === username.trim().toLowerCase());
+
         if (!username || !roomName) {
             e.preventDefault();
             setErrorMessage('Please fill in all the fields.');
+            setTimeout(() => setErrorMessage(''), 5000);
+        } else if (findUser) {
+            e.preventDefault();
+            setErrorMessage('Username is taken.');
             setTimeout(() => setErrorMessage(''), 5000);
         } else {
             return null;
         }
     }
+
+    useEffect(() => {
+        axios.get('/users')
+            .then(res => {
+                setUsers(res.data);
+            })
+    }, []);
 
     return (
         <div className="join-container">
