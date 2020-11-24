@@ -5,6 +5,7 @@ export default function Landing() {
 
     const [username, setUsername] = useState('');
     const [roomName, setRoomName] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -13,6 +14,16 @@ export default function Landing() {
             setUsername(value);
         } else if (name === "room") {
             setRoomName(value);
+        }
+    }
+
+    const handleSubmit = (e) => {
+        if (!username || !roomName) {
+            e.preventDefault();
+            setErrorMessage('Please fill in all the fields.');
+            setTimeout(() => setErrorMessage(''), 5000);
+        } else {
+            return null;
         }
     }
 
@@ -48,13 +59,17 @@ export default function Landing() {
                             placeholder="Enter Room ID"
                         />
                     </div>
-                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                        <span><strong>Holy guacamole!</strong> You should check in on some of those fields below.</span>
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <Link onClick={e => (!username || !roomName) ? e.preventDefault() : null} to={`/room?username=${username}&room=${roomName}`}>
+                    {
+                        errorMessage
+                            ?
+                            <div className="alert alert-danger" role="alert">
+                                <span><strong>Uh oh!</strong> {errorMessage}</span>
+                            </div>
+                            :
+                            null
+                    }
+
+                    <Link onClick={handleSubmit} to={`/room?username=${username}&room=${roomName}`}>
                         <button type="submit" className="btn">Join Room</button>
                     </Link>
                 </form>
