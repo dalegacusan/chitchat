@@ -51,7 +51,7 @@ export default function Chat({ location }) {
         setRoomName(room);
 
         socket.emit('join', { username, room }, (err) => {
-            console.log(err);
+
         });
 
         // Gets called on unMount

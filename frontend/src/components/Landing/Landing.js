@@ -10,6 +10,10 @@ export default function Landing() {
     const [errorMessages, setErrorMessages] = useState([]);
     const [users, setUsers] = useState([]);
 
+    /*
+        Error messages get reset to an empty array,
+        once the user gets into a room successfully.
+    */
     const handleErrorMessages = (errObj) => {
         setErrorMessages([...errorMessages, errObj]);
     }
@@ -60,7 +64,7 @@ export default function Landing() {
             .then(res => {
                 setUsers(res.data);
             })
-    }, [users]);
+    }, []);
 
     return (
         <div className="join-container">
@@ -95,7 +99,8 @@ export default function Landing() {
                         />
                     </div>
                     {
-                        errorMessages
+                        // UNMOUNT THIS
+                        errorMessages.length !== 0
                             ?
                             <ErrorMessages errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
                             :
