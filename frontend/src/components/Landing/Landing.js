@@ -20,7 +20,13 @@ export default function Landing() {
     }
 
     const handleSubmit = (e) => {
-        const findUser = users.find(user => user.username === username.trim().toLowerCase());
+        const findUser = users.find(user => {
+
+            const trimmedLowerUsername = username.trim().toLowerCase();
+            const trimmedLowerRoomName = roomName.trim().toLowerCase();
+
+            return (user.username === trimmedLowerUsername) && (trimmedLowerRoomName === user.room);
+        });
 
         if (!username || !roomName) {
             e.preventDefault();
@@ -28,7 +34,7 @@ export default function Landing() {
             setTimeout(() => setErrorMessage(''), 5000);
         } else if (findUser) {
             e.preventDefault();
-            setErrorMessage('Username is taken.');
+            setErrorMessage('Username is taken in the room.');
             setTimeout(() => setErrorMessage(''), 5000);
         } else {
             return null;
@@ -40,7 +46,7 @@ export default function Landing() {
             .then(res => {
                 setUsers(res.data);
             })
-    }, []);
+    }, [users]);
 
     return (
         <div className="join-container">
