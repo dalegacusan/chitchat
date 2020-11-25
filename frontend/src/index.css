@@ -179,6 +179,7 @@ a {
 	display: inline-block;
 	font-size: 32px;
 	font-weight: bold;
+	margin-bottom: 0;
 }
 
 .join-header i{

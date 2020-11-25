@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import ErrorMessages from "../ErrorMessages/ErrorMessages";
 const axios = require('axios');
 
 export default function Landing() {
 
     const [username, setUsername] = useState('');
     const [roomName, setRoomName] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessages, setErrorMessages] = useState([]);
     const [users, setUsers] = useState([]);
+
+    const handleErrorMessages = (errObj) => {
+        setErrorMessages([...errorMessages, errObj]);
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -30,12 +35,21 @@ export default function Landing() {
 
         if (!username || !roomName) {
             e.preventDefault();
-            setErrorMessage('Please fill in all the fields.');
-            setTimeout(() => setErrorMessage(''), 5000);
+            handleErrorMessages(
+                {
+                    errName: 'incompleteFields',
+                    errMessage: 'Please fill in all the fields.'
+                }
+            );
+
         } else if (findUser) {
             e.preventDefault();
-            setErrorMessage('Username is taken in the room.');
-            setTimeout(() => setErrorMessage(''), 5000);
+            handleErrorMessages(
+                {
+                    errName: 'usernameTaken',
+                    errMessage: 'Username is taken in the room.'
+                }
+            );
         } else {
             return null;
         }
@@ -81,15 +95,12 @@ export default function Landing() {
                         />
                     </div>
                     {
-                        errorMessage
+                        errorMessages
                             ?
-                            <div className="alert alert-danger" role="alert">
-                                <span><strong>Uh oh!</strong> {errorMessage}</span>
-                            </div>
+                            <ErrorMessages errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
                             :
                             null
                     }
-
                     <Link onClick={handleSubmit} to={`/room?username=${username}&room=${roomName}`}>
                         <button type="submit" className="btn">Join Room</button>
                     </Link>
