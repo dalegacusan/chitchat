@@ -99,7 +99,6 @@ export default function Landing() {
                         />
                     </div>
                     {
-                        // UNMOUNT THIS
                         errorMessages.length !== 0
                             ?
                             <ErrorMessages errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
@@ -112,6 +111,7 @@ export default function Landing() {
                 </form>
             </main>
             <footer className="source-code-footer">
+                <p>by <a href="https://github.com/dalegacusan" target="_blank">Dale Gacusan</a></p>
                 <a href="https://github.com/dalegacusan" target="_blank">
                     <i className="fab fa-github"></i>
                 </a>

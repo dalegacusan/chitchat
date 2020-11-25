@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
       'message',
       messageHandler(
         'admin',
-        `Welcome ${currentUserName} to ${currentRoom}.`,
+        `Welcome to ${currentRoom}, ${currentUserName}!`,
       )
     );
 

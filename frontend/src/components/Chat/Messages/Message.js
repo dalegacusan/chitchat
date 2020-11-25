@@ -14,20 +14,21 @@ export default function Message(props) {
   }
 
   return (
-    isSentByCurrentUser
-      ? (
-        // Display to the RIGHT
-        <div className="message backgroundDark">
-          <p className="meta userName">{trimmedUsername} <span className="userTime">{time}</span></p>
-          <p className="text">{text}</p>
-        </div>
-      )
-      : (
-        // Display to the LEFT
-        <div className="message">
-          <p className="meta">{user} <span>{time}</span></p>
-          <p className="text">{text}</p>
-        </div>
-      )
+    user === 'admin' ?
+      <p className="meta userName welcomeText"><span className="text">{text}</span></p>
+      :
+      isSentByCurrentUser
+        ? (
+          <div className="message backgroundDark userMessage">
+            <p className="meta userName">{trimmedUsername} <span className="userTime">{time}</span></p>
+            <p className="text">{text}</p>
+          </div>
+        )
+        : (
+          <div className="message userMessage">
+            <p className="meta">{user} <span>{time}</span></p>
+            <p className="text">{text}</p>
+          </div>
+        )
   );
 }
