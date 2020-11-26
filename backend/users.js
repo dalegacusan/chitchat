@@ -30,6 +30,8 @@ const removeUser = (userID) => {
 
 const getUser = (userID) => users.find((user) => user.userID === userID);
 
+const getAllUsers = () => users.map(user => user);
+
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
 module.exports = { addUser, removeUser, getUser, getAllUsers, getUsersInRoom };
