@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import ErrorMessages from "../ErrorMessages/ErrorMessages";
+import Loader from "../Loader/Loader";
 const axios = require('axios');
 
 export default function Landing() {
@@ -9,6 +10,7 @@ export default function Landing() {
     const [roomName, setRoomName] = useState('');
     const [errorMessages, setErrorMessages] = useState([]);
     const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     /*
         Error messages get reset to an empty array,
@@ -63,8 +65,13 @@ export default function Landing() {
         axios.get('/users')
             .then(res => {
                 setUsers(res.data);
+                setIsLoading(false);
             })
     }, []);
+
+    if (isLoading) {
+        return <Loader />
+    }
 
     return (
         <div className="join-container">
