@@ -19,9 +19,16 @@ export default function Chat({ location }) {
     const ENDPOINT = 'https://real-time-chat-react.herokuapp.com/';
     // const ENDPOINT = 'localhost:8080';
 
-    const handleInputChange = (e) => {
-        const { value } = e.target;
-        setMessage(value);
+    const handleInputChange = (e, emoji) => {
+
+
+        if (e === null && emoji) {
+            setMessage((curr) => curr + emoji);
+        } else {
+            const { value } = e.target;
+            setMessage(value);
+        }
+
     };
 
     const handleKeyPress = (e) => {
@@ -89,6 +96,7 @@ export default function Chat({ location }) {
                     <Messages messages={messages} username={username} />
                 </div>
             </main>
+
             <div className="chat-form-container">
                 <ChatForm
                     message={message}
