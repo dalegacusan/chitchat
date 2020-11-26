@@ -11,6 +11,7 @@ export default function Landing() {
     const [errorMessages, setErrorMessages] = useState([]);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const USERS = 'https://real-time-chat-react.herokuapp.com/users';
 
     /*
         Error messages get reset to an empty array,
@@ -62,7 +63,7 @@ export default function Landing() {
     }
 
     useEffect(() => {
-        axios.get('/users')
+        axios.get(USERS)
             .then(res => {
                 setUsers(res.data);
                 setIsLoading(false);
