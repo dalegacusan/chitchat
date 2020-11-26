@@ -1,29 +1,16 @@
 import React, { useState } from "react";
-import 'emoji-mart/css/emoji-mart.css'
-import { Picker } from 'emoji-mart'
+import 'emoji-mart/css/emoji-mart.css';
 
 export default function ChatForm(props) {
-  const { message, handleInputChange, handleKeyPress, sendMessage } = props;
-  const [toggleEmojis, setToggleEmojis] = useState(false);
-
-  const handleEmojiSelect = (emoji) => {
-    handleInputChange(null, emoji.native)
-  };
+  const { message, handleInputChange, handleKeyPress, sendMessage, handleToggleEmojis } = props;
 
   return (
     <div>
-      {
-        toggleEmojis
-          ?
-          <div className="emojiContainer">
-            <Picker onSelect={handleEmojiSelect} />
-          </div>
-          : null
-      }
+      
       <form id="chat-form">
         <div className="input-group mb-3 chatForm">
           <div className="input-group-prepend">
-            <button className="btn btn-outline-secondary emojiButton" type="button" onClick={() => setToggleEmojis(!toggleEmojis)}> <i className="far fa-smile"></i></button>
+            <button className="btn btn-outline-secondary emojiButton" type="button" onClick={handleToggleEmojis}> <i className="far fa-smile"></i></button>
           </div>
           <div className="custom-file">
             <input

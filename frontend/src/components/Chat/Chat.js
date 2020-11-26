@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from "socket.io-client";
+import { Picker } from 'emoji-mart';
 
 // Components
 import ChatHeader from "./ChatHeader/ChatHeader";
@@ -16,6 +17,7 @@ export default function Chat({ location }) {
     const [usersInRoom, setUsersInRoom] = useState([]);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [toggleEmojis, setToggleEmojis] = useState(false);
     const ENDPOINT = 'https://real-time-chat-react.herokuapp.com/';
     // const ENDPOINT = 'localhost:8080';
 
@@ -40,6 +42,15 @@ export default function Chat({ location }) {
             return null;
         }
     };
+
+
+    const handleEmojiSelect = (emoji) => {
+        handleInputChange(null, emoji.native)
+    };
+
+    const handleToggleEmojis = () => {
+        setToggleEmojis(!toggleEmojis)
+    }
 
     useEffect(() => {
         /* 
@@ -87,6 +98,8 @@ export default function Chat({ location }) {
         }
     }
 
+    const exclude = ["flags", "custom", "search"]
+
     return (
         <div className="chat-container">
             <ChatHeader />
@@ -96,14 +109,26 @@ export default function Chat({ location }) {
                     <Messages messages={messages} username={username} />
                 </div>
             </main>
-
-            <div className="chat-form-container">
+            <div className="chat-form-container" style={{ position: "relative" }}>
+                {
+                    toggleEmojis
+                        ?
+                        <Picker
+                            perLine={8}
+                            title={"Pick Emoji"}
+                            exclude={exclude}
+                            style={{ position: "absolute", bottom: "0", marginBottom: "55px" }}
+                            onSelect={handleEmojiSelect}
+                        />
+                        : null
+                }
                 <ChatForm
                     message={message}
                     username={username}
                     handleInputChange={handleInputChange}
                     handleKeyPress={handleKeyPress}
                     sendMessage={sendMessage}
+                    handleToggleEmojis={handleToggleEmojis}
                 />
             </div>
         </div>
