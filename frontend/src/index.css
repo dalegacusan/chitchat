@@ -184,7 +184,12 @@ a {
 }
 
 .emojiButton:hover{
-	background-color: #212121;
+	background-color: #ffffff;
+	color: var(--header-color)
+}
+
+.emojiButton:active{
+	background-color: #ffffff!important;
 }
 
 #msg{
@@ -288,10 +293,6 @@ a {
 .fa-github{
 	margin: 0 6px;
 	color: var(--black-color);
-}
-
-.fa-github:hover{
-	color: var(--header-color);
 }
 
 @media (max-width: 700px) {
